@@ -124,3 +124,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'frontend']
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+SYSTEM_EMAIL = 'rosseti@rosseti.ru'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = SYSTEM_EMAIL
+EMAIL_HOST_PASSWORD = 'Poiu0987'
+EMAIL_USE_TLS = True

@@ -94,8 +94,8 @@
                                 <td><a href="/claims/detail/{{claim.id}}">{{claim.name}}</a></td>
                                 <td>{{claim.expert}}</td>
                                 <td>{{claim.creation_dt}}</td>
-                                <td>{{claim.status}}</td>
-                                <td><a href="">Зулип стрим</a></td>
+                                <td>{{claim.get_status_display}}</td>
+                                <td><a href="">{{claim.id}}: {{claim.name}}</a></td>
                             </tr>
                         {%endfor%}
                         </tbody>

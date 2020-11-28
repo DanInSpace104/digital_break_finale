@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView
 from zulip_api.zulip_api import zulip_create_stream
 
 from .models import Category, Claim, Cost, Term
+from .mail import send_email
 
 
 class IndexView(TemplateView):
@@ -65,6 +66,13 @@ class CreateClaimView(CreateView):
             term.save()
             self.object.terms.add(term)
         self.object.save()
+        for user in self.object.users.all():
+            send_email(user.email, self.object.name, 'новая заявка создана')
+        send_email(
+            self.object.expert.email,
+            self.object.name,
+            'новая заявка создана',
+        )
 
         return response
 
@@ -88,3 +96,13 @@ class ClaimListView(ListView):
 class ClaimDetailView(DetailView):
     model = Claim
     template_name = 'claims/detail.html'
+
+
+class ExpertPageView(View):
+    def get(self, request, *args, **kwargs):
+        ctx = {}
+        expert_claims = Claim.objects.filter(expert=kwargs['pk'])
+        new_claims = expert_claims.filter(status='EX')
+        ctx['expert_claims'] = expert_claims
+        ctx['new_claims'] = new_claims
+        return render(request, 'cabinet/expert.html', ctx)
