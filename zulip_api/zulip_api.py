@@ -6,8 +6,8 @@ from django.conf import settings
 client = zulip.Client(config_file=str(settings.BASE_DIR / "zulip_api/.zuliprc"))
 
 
-def zulip_create_stram(expert_mail, user_list, id_in_db_case, name_case, category):
-    '''
+def zulip_create_stream(expert_mail, user_list, id_in_db_case, name_case, category):
+    """
     На вход получаем 5 аргументов, где:
         expert_mail, является строкой и означает почту эксперта
         user_list, список объектов юзера в виде list-а
@@ -15,7 +15,7 @@ def zulip_create_stram(expert_mail, user_list, id_in_db_case, name_case, categor
         name_case, Имя кейса (строка)
         category, К какой категории относится кейс (строка)
     Функция создает стрим в зулипе и добавляет туда всех юзеров и эксперта
-    '''
+    """
     user_mail_list = []
     for e in user_list:
         user_mail_list.append(e.email)
