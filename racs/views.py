@@ -115,6 +115,27 @@ class ExpertPageView(View):
         ctx = {}
         expert_claims = Claim.objects.filter(expert=kwargs['pk'])
         new_claims = expert_claims.filter(status='EX')
+        expert_claims = expert_claims.exclude(id__in=new_claims)
         ctx['expert_claims'] = expert_claims
         ctx['new_claims'] = new_claims
         return render(request, 'cabinet/expert.html', ctx)
+
+
+class UserPageView(View):
+    def get(self, request, *args, **kwargs):
+        ctx = {}
+        claims = Claim.objects.filter(expert=kwargs['pk'])
+        ctx['claims'] = claims
+        return render(request, 'cabinet/user.html', ctx)
+
+
+class DirectorPageView(View):
+    def get(self, request, *args, **kwargs):
+        ctx = {}
+        claims = Claim.objects.all()
+        ctx['claims'] = claims.filter(status__in=['IP', 'ON', 'OU', 'TU', 'TN'])
+        res = {key: 0 for key, value in Claim.STATUS_CHOICES}
+        for claim in claims:
+            res[claim.status] += 1
+        ctx['chart'] = list(res.values())
+        return render(request, 'cabinet/director.html', ctx)

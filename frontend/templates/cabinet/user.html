@@ -43,7 +43,7 @@
             </section class="content">
             <div class="card card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Новые заявки</h3>
+                    <h3 class="card-title">Заявки</h3>
                 </div>
                 <div class="card-body">
                     <table id="example2" class="table table-bordered table-hover">
@@ -57,37 +57,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {%for claim in new_claims%}
-                            <tr>
-                                <td><a href="/claims/detail/{{claim.id}}">{{claim.name}}</a></td>
-                                <td>{{claim.expert}}</td>
-                                <td>{{claim.creation_dt}}</td>
-                                <td>{{claim.get_status_display}}</td>
-                                <td><a href="">{{claim.id}}: {{claim.name}}</a></td>
-                            </tr>
-                        {%endfor%}
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-            <div class="card card-success">
-                <div class="card-header">
-                    <h3 class="card-title">Новые заявки</h3>
-                </div>
-                <div class="card-body">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Имя</th>
-                                <th>Куратор</th>
-                                <th>Дата подачи</th>
-                                <th>Статус</th>
-                                <th>Стрим</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {%for claim in expert_claims%}
+                        {%for claim in claims%}
                             <tr>
                                 <td><a href="/claims/detail/{{claim.id}}">{{claim.name}}</a></td>
                                 <td>{{claim.expert}}</td>
