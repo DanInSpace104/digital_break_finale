@@ -55,3 +55,13 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Otdel(models.Model):
+    name = models.CharField(max_length=255)
+    expert = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='otdels'
+    )
+
+    def __str__(self):
+        return self.name
