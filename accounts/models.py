@@ -8,3 +8,6 @@ class Profile(models.Model):
         settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE
     )
     picture = models.ImageField(upload_to='profiles', default='profiles/default.png')
+
+    def __str__(self):
+        return self.user.username
