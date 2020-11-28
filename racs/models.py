@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+import datetime
 
 
 class Claim(models.Model):
@@ -29,6 +30,7 @@ class Claim(models.Model):
         settings.AUTH_USER_MODEL, related_name='eclaims', on_delete=models.PROTECT
     )
     category = models.ForeignKey('racs.Category', related_name='claims', on_delete=models.PROTECT)
+    creation_dt = models.DateTimeField(auto_now=True, blank=True)
 
     def __str__(self):
         return self.name

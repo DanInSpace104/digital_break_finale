@@ -4,7 +4,7 @@ from django.apps import apps
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, ListView, DetailView
 from django.views.generic.edit import CreateView
 from zulip_api.zulip_api import zulip_create_stream
 
@@ -40,7 +40,6 @@ class CreateClaimView(CreateView):
         return data
 
     def form_valid(self, form):
-        print(form.data)
         response = super().form_valid(form)
         data = form.cleaned_data
         zulip_create_stream(
@@ -79,3 +78,13 @@ class ChartClaimView(View):
             res[claim.status] += 1
 
         return render(request, 'claims/chart.html', {'res': list(res.values())})
+
+
+class ClaimListView(ListView):
+    model = Claim
+    template_name = 'claims/claim_list.html'
+
+
+class ClaimDetailView(DetailView):
+    model = Claim
+    template_name = 'claims/detail.html'
