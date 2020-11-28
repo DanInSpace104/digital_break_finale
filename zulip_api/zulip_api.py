@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import zulip
+from django.conf import settings
 
 # Pass the path to your zuliprc file here.
-client = zulip.Client(config_file="~/zuliprc")
+client = zulip.Client(config_file=str(settings.BASE_DIR / "zulip_api/.zuliprc"))
 
 # expert_mail = 'konshin104@gmail.com'
 # user_mail = 'BlueSkyC@mail.ru'
@@ -12,7 +13,7 @@ client = zulip.Client(config_file="~/zuliprc")
 # category = 'ДокРеентация'
 
 
-def zulip_create_stram(expert_mail, user_mail, id_in_db_case, name_case, category):
+def zulip_create_stream(expert_mail, user_mail, claim_id, claim_name, category):
     result = client.call_endpoint(
         url='users?client_gravatar=true',
         method='GET',
@@ -29,7 +30,7 @@ def zulip_create_stram(expert_mail, user_mail, id_in_db_case, name_case, categor
     result = client.add_subscriptions(
         streams=[
             {
-                'name': f'{id_in_db_case}: {name_case}',
+                'name': f'{claim_id}: {claim_name}',
                 'description': f'Категория: {category}',
             },
         ],
