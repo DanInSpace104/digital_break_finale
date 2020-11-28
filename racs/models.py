@@ -29,7 +29,7 @@ class Claim(models.Model):
     expert = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='eclaims', on_delete=models.PROTECT
     )
-    category = models.ForeignKey('racs.Category', related_name='claims', on_delete=models.PROTECT)
+    category = models.ManyToManyField('racs.Category', related_name='claims')
     creation_dt = models.DateTimeField(auto_now=True, blank=True)
 
     def __str__(self):

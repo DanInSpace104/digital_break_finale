@@ -97,6 +97,18 @@ class ClaimDetailView(DetailView):
     model = Claim
     template_name = 'claims/detail.html'
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        cost_summ = 0
+        for cost in self.object.costs.all():
+            cost_summ += cost.summ
+        data['costs_summ'] = cost_summ
+        term_summ = 0
+        for term in self.object.terms.all():
+            term_summ += term.days
+        data['term_summ'] = term_summ
+        return data
+
 
 class ExpertPageView(View):
     def get(self, request, *args, **kwargs):
