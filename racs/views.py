@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView
 from .models import Claim
+from zulip_api.zulip_api import zulip_create_stream
+from django.http import HttpResponse
 
 
 class IndexView(TemplateView):
@@ -11,6 +13,7 @@ class IndexView(TemplateView):
 class CreateClaimView(CreateView):
     model = Claim
     template_name = 'claims/create_claim.html'
+    success_url = '/'
     fields = (
         'name',
         'users',
@@ -26,4 +29,13 @@ class CreateClaimView(CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        print(form)
+        data = form.cleaned_data
+        zulip_create_stream(
+            data['expert'].email,
+            data['users'],
+            self.object.id,
+            data['name'],
+            data['category'],
+        )
+
+        return response
