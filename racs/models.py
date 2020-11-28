@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 
 class Claim(models.Model):
@@ -14,14 +15,16 @@ class Claim(models.Model):
         ('TU', 'Тиражирование завершено успешно'),
         ('TN', 'Тиражирование завершено неуспешно'),
     )
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='uclaims')
-    status = models.CharField(max_length=15, choices=STATUS_CHOICES)
+    users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name='uclaims', verbose_name='Пользователи'
+    )
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='EX')
     name = models.CharField(max_length=120)
     curr_desc = models.TextField()
     new_desc = models.TextField()
     pos_effect = models.TextField()
-    costs = models.ManyToManyField('racs.Cost', related_name='claims')
-    terms = models.ManyToManyField('racs.Term', related_name='claims')
+    costs = models.ManyToManyField('racs.Cost', related_name='claims', blank=True)
+    terms = models.ManyToManyField('racs.Term', related_name='claims', blank=True)
     expert = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='eclaims', on_delete=models.PROTECT
     )
