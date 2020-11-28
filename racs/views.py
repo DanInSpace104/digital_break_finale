@@ -1,11 +1,14 @@
+import json
+
+from django.apps import apps
+from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView
-from .models import Claim, Category, Term, Cost
 from zulip_api.zulip_api import zulip_create_stream
-from django.http import HttpResponse
-from django.conf import settings
-from django.apps import apps
+
+from .models import Category, Claim, Cost, Term
 
 
 class IndexView(TemplateView):
@@ -65,3 +68,14 @@ class CreateClaimView(CreateView):
         self.object.save()
 
         return response
+
+
+class ChartClaimView(View):
+    def get(self, request):
+        claims = Claim.objects.all()
+        res = {key: 0 for key, value in Claim.STATUS_CHOICES}
+        print(res)
+        for claim in claims:
+            res[claim.status] += 1
+
+        return render(request, 'claims/chart.html', {'res': list(res.values())})
