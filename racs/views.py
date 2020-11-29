@@ -5,7 +5,7 @@ from django.apps import apps
 from django.conf import settings
 from django.http import HttpResponse
 from django.http.response import FileResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, ListView, DetailView
 from django.views.generic.edit import CreateView
 from zulip_api.zulip_api import zulip_create_stream
@@ -203,3 +203,21 @@ class DenyClaimView(View):
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+
+from django.contrib.auth.models import Group
+
+
+class CabinetView(View):
+    def get(self, request, *args, **kwargs):
+        id = str(request.user.id)
+        g = request.user.groups.get().name
+        print(g == 'Директор', type(g))
+        if g == 'Директор':
+            return redirect('/cabinet/director/' + id)
+        if g == 'Пользователь':
+            return redirect('/cabinet/user/' + id)
+        if g == 'Эксперт':
+            return redirect('/cabinet/expert/' + id)
+        else:
+            return redirect('/cabinet/user/' + id)

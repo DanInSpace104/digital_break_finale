@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', views.IndexView.as_view()),
@@ -13,4 +14,5 @@ urlpatterns = [
     path('claims/download/<int:pk>', views.DownloadClaimView.as_view(), name='download_claim'),
     path('claims/allow/<int:pk>', views.AllowClaimView.as_view(), name='allow_claim'),
     path('claims/deny/<int:pk>', views.DenyClaimView.as_view(), name='deny_claim'),
+    path('cabinet/', login_required(views.CabinetView.as_view()), name='cabinet'),
 ]
