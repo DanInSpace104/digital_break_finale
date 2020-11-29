@@ -1,26 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-{%load static %}
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Project Detail</title>
-
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css'%}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css'%}">
-</head>
-
-<body class="hold-transition sidebar-mini">
-    <!-- Site wrapper -->
+{% extends 'base.html'%}
+{% block content %}
     <div class="wrapper">
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="container">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
@@ -87,31 +70,15 @@
                                         <h1>{{object.get_status_display}}</h1>
                                         <hr>
                                         Положение: <br>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est ab maiores commodi nulla! Aliquam optio modi quod voluptas at, ut a odio est dolorum doloremque quis blanditiis, saepe illum eveniet!
+                                        {{object.curr_desc}}
                                         <hr> 
                                         Решение: <br>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est ab maiores commodi nulla! Aliquam optio modi quod voluptas at, ut a odio est dolorum doloremque quis blanditiis, saepe illum eveniet!
+                                        {{object.new_desc}}
                                         <hr>
                                         Эффект: <br>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est ab maiores commodi nulla! Aliquam optio modi quod voluptas at, ut a odio est dolorum doloremque quis blanditiis, saepe illum eveniet!
+                                        {{object.pos_effect}}
                                         <hr>
                                         <h3>Коментарии: </h3>
-                                        <a href="">Иван Иванов</a><br>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est ab maiores commodi nulla! Aliquam optio modi quod voluptas at, ut a odio est dolorum doloremque quis blanditiis, saepe illum eveniet!
-                                        <br>
-                                        <br>
-                                        <a href="">Иван Иванов</a><br>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est ab maiores commodi nulla! Aliquam optio modi quod voluptas at, ut a odio est dolorum doloremque quis blanditiis, saepe illum eveniet!
-                                        <br>
-                                        <br>
-                                        <a href="">Иван Иванов</a><br>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est ab maiores commodi nulla! Aliquam optio modi quod voluptas at, ut a odio est dolorum doloremque quis blanditiis, saepe illum eveniet!
-                                        <br>
-                                        <br>
-                                        <a href="">Иван Иванов</a><br>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est ab maiores commodi nulla! Aliquam optio modi quod voluptas at, ut a odio est dolorum doloremque quis blanditiis, saepe illum eveniet!
-                                        <br>
-                                        <br>
                                         <a href="">Иван Иванов</a><br>
                                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est ab maiores commodi nulla! Aliquam optio modi quod voluptas at, ut a odio est dolorum doloremque quis blanditiis, saepe illum eveniet!
                                         <br>
@@ -187,31 +154,6 @@
                                         </a>
                                         <hr>
 
-                                        <a href="">
-                                            <h4>
-                                                Название таски
-                                            </h4>
-                                            <p>
-                                                <b>Проблематика : </b> Lorem ipsum dolor sit amet consectetur,
-                                                adipisicing elit. Ut ipsum, laboriosam, distinctio natus inventore a
-                                                quia reiciendis voluptate accusantium maxime minus eaque officia fugiat
-                                                quis veritatis? Ad magni optio nesciunt.
-                                            </p>
-                                        </a>
-                                        <hr>
-
-                                        <a href="">
-                                            <h4>
-                                                Название таски
-                                            </h4>
-                                            <p>
-                                                <b>Проблематика : </b> Lorem ipsum dolor sit amet consectetur,
-                                                adipisicing elit. Ut ipsum, laboriosam, distinctio natus inventore a
-                                                quia reiciendis voluptate accusantium maxime minus eaque officia fugiat
-                                                quis veritatis? Ad magni optio nesciunt.
-                                            </p>
-                                        </a>
-                                        <hr>
 
                                     </div>
                                 </div>
@@ -227,25 +169,4 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-
-
-
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
-    </div>
-    <!-- ./wrapper -->
-
-    <!-- jQuery -->
-    <script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
-    <!-- AdminLTE App -->
-    <script src="{% static 'dist/js/adminlte.min.js'%}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{% static 'dist/js/demo.js'%}"></script>
-</body>
-
-</html>
+{%endblock content %}
