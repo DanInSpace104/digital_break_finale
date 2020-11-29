@@ -1,8 +1,10 @@
+import os
 import json
 
 from django.apps import apps
 from django.conf import settings
 from django.http import HttpResponse
+from django.http.response import FileResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, View, ListView, DetailView
 from django.views.generic.edit import CreateView
@@ -10,6 +12,7 @@ from zulip_api.zulip_api import zulip_create_stream
 
 from .models import Category, Claim, Cost, Term
 from .mail import send_email
+from .generate_docx import generate_docx
 
 
 class IndexView(TemplateView):
@@ -139,3 +142,10 @@ class DirectorPageView(View):
             res[claim.status] += 1
         ctx['chart'] = list(res.values())
         return render(request, 'cabinet/director.html', ctx)
+
+
+class DownloadClaimView(View):
+    def get(self, request, *args, **kwargs):
+        generate_docx(Claim.objects.get(pk=kwargs['pk']))
+        response = FileResponse(open('tmp.docx', 'rb'))
+        return response

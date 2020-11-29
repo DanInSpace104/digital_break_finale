@@ -10,4 +10,5 @@ urlpatterns = [
     path('cabinet/expert/<int:pk>', views.ExpertPageView.as_view(), name='expert_cabinet'),
     path('cabinet/user/<int:pk>', views.UserPageView.as_view(), name='user_cabinet'),
     path('cabinet/director/<int:pk>', views.DirectorPageView.as_view(), name='director_cabinet'),
+    path('claims/download/<int:pk>', views.DownloadClaimView.as_view(), name='download_claim'),
 ]
