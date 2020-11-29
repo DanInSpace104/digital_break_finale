@@ -128,32 +128,17 @@
                                     <div class="col-12">
                                         <h4>Похожие заявки</h4>
                                         <br>
-                                        <a href="">
+                                        {%for sim in object.similars.all%}
+                                        <a href="/claims/detail/{{sim.id}}">
                                             <h4>
-                                                Название таски
+                                                {{sim.name}}
                                             </h4>
                                             <p>
-                                                <b>Проблематика : </b> Lorem ipsum dolor sit amet consectetur,
-                                                adipisicing elit. Ut ipsum, laboriosam, distinctio natus inventore a
-                                                quia reiciendis voluptate accusantium maxime minus eaque officia fugiat
-                                                quis veritatis? Ad magni optio nesciunt.
+                                                <b>Проблематика : </b> {{claim.curr_desc}}
                                             </p>
                                         </a>
                                         <hr>
-
-                                        <a href="">
-                                            <h4>
-                                                Название таски
-                                            </h4>
-                                            <p>
-                                                <b>Проблематика : </b> Lorem ipsum dolor sit amet consectetur,
-                                                adipisicing elit. Ut ipsum, laboriosam, distinctio natus inventore a
-                                                quia reiciendis voluptate accusantium maxime minus eaque officia fugiat
-                                                quis veritatis? Ad magni optio nesciunt.
-                                            </p>
-                                        </a>
-                                        <hr>
-
+                                        {%endfor%}
 
                                     </div>
                                 </div>

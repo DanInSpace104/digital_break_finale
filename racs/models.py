@@ -31,6 +31,7 @@ class Claim(models.Model):
     )
     category = models.ManyToManyField('racs.Category', related_name='claims')
     creation_dt = models.DateTimeField(auto_now=True, blank=True)
+    similars = models.ManyToManyField('racs.Claim', blank=True)
 
     def __str__(self):
         return self.name

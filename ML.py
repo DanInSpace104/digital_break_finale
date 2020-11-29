@@ -63,6 +63,3 @@ def model(text_list):
         return True
     else:
         return False
-
-
-print(model([text_3, text_4]))

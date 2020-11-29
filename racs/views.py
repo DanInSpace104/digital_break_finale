@@ -13,6 +13,7 @@ from zulip_api.zulip_api import zulip_create_stream
 from .models import Category, Claim, Cost, Term
 from .mail import send_email
 from .generate_docx import generate_docx
+from ML import model as is_similar
 
 
 class IndexView(TemplateView):
@@ -69,13 +70,19 @@ class CreateClaimView(CreateView):
             term.save()
             self.object.terms.add(term)
         self.object.save()
-        for user in self.object.users.all():
-            send_email(user.email, self.object.name, 'новая заявка создана')
-        send_email(
-            self.object.expert.email,
-            self.object.name,
-            'новая заявка создана',
-        )
+        try:
+            for user in self.object.users.all():
+                send_email(user.email, self.object.name, 'новая заявка создана')
+            send_email(
+                self.object.expert.email,
+                self.object.name,
+                'новая заявка создана',
+            )
+        except:
+            pass
+        for test in Claim.objects.all().exclude(id=self.object.id):
+            if is_similar([self.object.curr_desc, test.curr_desc]):
+                self.object.similars.add(test)
 
         return response
 
