@@ -9,7 +9,9 @@ class Profile(models.Model):
         settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE
     )
     picture = models.ImageField(upload_to='profiles', default='profiles/default.png')
-    otdel = models.ForeignKey(to='racs.Otdel', on_delete=models.PROTECT, related_name='profiles')
+    otdel = models.ForeignKey(
+        to='racs.Otdel', on_delete=models.PROTECT, related_name='profiles', blank=True, null=True
+    )
 
     def __str__(self):
         return self.user.username

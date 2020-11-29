@@ -134,7 +134,7 @@ class ExpertPageView(View):
 class UserPageView(View):
     def get(self, request, *args, **kwargs):
         ctx = {}
-        claims = Claim.objects.filter(expert=kwargs['pk'])
+        claims = Claim.objects.filter(users__id__in=[kwargs['pk']])
         ctx['claims'] = claims
         return render(request, 'cabinet/user.html', ctx)
 
