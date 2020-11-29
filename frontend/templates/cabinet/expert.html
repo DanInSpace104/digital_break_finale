@@ -64,6 +64,8 @@
                                 <td>{{claim.creation_dt}}</td>
                                 <td>{{claim.get_status_display}}</td>
                                 <td><a href="">{{claim.id}}: {{claim.name}}</a></td>
+                                <td><button onclick="onAllowClick({{claim.id}})" class="btn btn-success">Принять</button></td>
+                                <td><button onclick="onCancelClick({{claim.id}})" class="btn btn-danger">Отклонить</button></td>
                             </tr>
                         {%endfor%}
                         </tbody>
@@ -73,7 +75,7 @@
             </div>
             <div class="card card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Новые заявки</h3>
+                    <h3 class="card-title">Заявки</h3>
                 </div>
                 <div class="card-body">
                     <table id="example2" class="table table-bordered table-hover">
@@ -84,6 +86,7 @@
                                 <th>Дата подачи</th>
                                 <th>Статус</th>
                                 <th>Стрим</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -94,6 +97,8 @@
                                 <td>{{claim.creation_dt}}</td>
                                 <td>{{claim.get_status_display}}</td>
                                 <td><a href="">{{claim.id}}: {{claim.name}}</a></td>
+                                <td><button onclick="onAllowClick({{claim.id}})" class="btn btn-success">Принять</button></td>
+                                <td><button onclick="onCancelClick({{claim.id}})" class="btn btn-danger">Отклонить</button></td>
                             </tr>
                         {%endfor%}
                         </tbody>
@@ -171,6 +176,20 @@
     <script src="{%static 'plugins/datatables-buttons/js/buttons.print.min.js'%}"></script>
     <script src="{%static 'plugins/datatables-buttons/js/buttons.colVis.min.js'%}"></script>
     <script>
+        function onAllowClick(id) {
+            $.post('/claims/allow/'+id, {text: 'Текст'}, function(data){
+                console.log(data);
+                window.location.reload();
+            });
+
+        }
+        function onCancelClick(id) {
+            $.post('/claims/deny/'+id, {text: 'Текст'}, function(data){
+                            console.log(data);
+                            window.location.reload();
+            });
+
+        }
 
         $('#example2').DataTable({
             "paging": true,

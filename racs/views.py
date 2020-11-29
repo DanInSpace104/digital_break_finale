@@ -14,6 +14,7 @@ from .models import Category, Claim, Cost, Term
 from .mail import send_email
 from .generate_docx import generate_docx
 from ML import model as is_similar
+from django.views.decorators.csrf import csrf_exempt
 
 
 class IndexView(TemplateView):
@@ -156,3 +157,49 @@ class DownloadClaimView(View):
         generate_docx(Claim.objects.get(pk=kwargs['pk']))
         response = FileResponse(open('tmp.docx', 'rb'))
         return response
+
+
+choices = [
+    'EX',
+    'DO',
+    'PR',
+    'OT',
+    'IP',
+    'ON',
+    'OU',
+    'TU',
+    'TN',
+]
+
+
+from django.utils.decorators import method_decorator
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AllowClaimView(View):
+    def post(self, request, *args, **kwargs):
+        claim = Claim.objects.get(id=kwargs['pk'])
+        for i, c in enumerate(choices):
+            if claim.status == c:
+                claim.status = choices[i + 1]
+                claim.save()
+                break
+        return HttpResponse(request)
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class DenyClaimView(View):
+    def post(self, request, *args, **kwargs):
+        claim = Claim.objects.get(id=kwargs['pk'])
+        for i, c in enumerate(choices):
+            if claim.status == c:
+                claim.status = choices[i - 1]
+                claim.save()
+                break
+        return HttpResponse(request)
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
